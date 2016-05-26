@@ -32,7 +32,7 @@ Whoa, that was neat! You can specify a group of edges you want to pin to, and th
 
 ![That escalated quickly](https://github.com/mergesort/anchorman/blob/master/gifs/escalated_quickly.gif)
 
-And of course, you can pick one edge to pin to:
+And of course, you can pick one edge to pin to another edge.
 
 ```
 myImportantLabel.pinEdge(.top, toEdge: .bottom, ofView: myGreatSearchBar, constant: 10.0)
