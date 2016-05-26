@@ -267,7 +267,7 @@ private extension UIView {
 
         return viewConstraints
     }
-    
+
 }
 
 private extension Array where Element: NSLayoutConstraint {
