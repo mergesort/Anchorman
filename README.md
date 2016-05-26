@@ -12,19 +12,19 @@ Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Tr
 
 I am a cool developer, making a cool app. It has so many views. I want to pin my view to it's superview.
 
-```
+```swift
 myView.pinToSuperview()
 ```
 
 That was easy, but I don't want to pin to a superview anymore, I want to pin to a button.
 
-```
+```swift
 myView.pinToView(someCoolerButton)
 ```
 
 Ah, ok. Easy enough… How about pinning my label to the left and right side of it's superview… and with insets… and center it in my view.
 
-```
+```swift
 MYCAPITALIZEDLABEL.pinToSuperview([ .leading,(10.0) .trailing(10.0), .centerX, .centerY ])
 ```
 
@@ -34,14 +34,14 @@ Whoa, that was neat! You can specify a group of edges you want to pin to, and th
 
 And of course, you can pick one edge to pin to another edge.
 
-```
+```swift
 myImportantLabel.pinEdge(.top, toEdge: .bottom, ofView: myGreatSearchBar, constant: 10.0)
 ```
 
 Last but not least, set constant values for your 
 constraints. For width, height, or both.
 
-```
+```swift
 myView.setSize([ .width(44.0), .height(44.0) ])
 ```
 
