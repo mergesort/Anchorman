@@ -19,13 +19,13 @@ myView.pinToSuperview()
 That was easy, but I don't want to pin to a superview anymore, I want to pin to a button.
 
 ```
-self.myView.pinToView(self.someCoolerButton)
+myView.pinToView(someCoolerButton)
 ```
 
 Ah, ok. Easy enough… How about pinning my label to the left and right side of it's superview… and with insets… and center it in my view.
 
 ```
-self.theLabel.pinToSuperview([ .leading,(10.0) .trailing(10.0), .centerX, .centerY ])
+MYCAPITALIZEDLABEL.pinToSuperview([ .leading,(10.0) .trailing(10.0), .centerX, .centerY ])
 ```
 
 Whoa, that was neat! You can specify a group of edges you want to pin to, and their offsets. Swift enums are the best!
@@ -35,14 +35,14 @@ Whoa, that was neat! You can specify a group of edges you want to pin to, and th
 And of course, you can pick one edge to pin to:
 
 ```
-self.myImportantLabel.pinEdge(.top, toEdge: .bottom, ofView: self.myGreatSearchBar, constant: 10.0)
+myImportantLabel.pinEdge(.top, toEdge: .bottom, ofView: myGreatSearchBar, constant: 10.0)
 ```
 
 Last but not least, set constant values for your 
-constraints.
+constraints. For width, height, or both.
 
 ```
-self.myView.setSize([ .width(44.0), .height(44.0) ])
+myView.setSize([ .width(44.0), .height(44.0) ])
 ```
 
 That's all I got! But who are you stranger?
@@ -51,6 +51,6 @@ That's all I got! But who are you stranger?
 
 Hi, I'm Joe! [@mergesort](http://fabisevi.ch) everywhere on the web, but especially on [Twitter](https://twitter.com/mergesort).
 
-Hopefully Anchorman is your cup of tea, it's the kind of autolayout library I'd want to use. So good night San Diego.
+Hopefully Anchorman is your cup of tea, it's the kind of autolayout library I'd want to use. And with that, good night San Diego.
 
 ![Stay Classy San Diego](https://github.com/mergesort/anchorman/blob/master/gifs/stay_classy.gif)
