@@ -236,23 +236,33 @@ public extension UIView {
 private extension UIView {
 
     func anchorForEdge(edge: EdgeAnchor) -> NSLayoutAnchor {
-        if edge == .leading {
+        switch edge {
+
+        case EdgeAnchor.leading:
             return self.leadingAnchor
-        } else if edge == .trailing {
+
+        case EdgeAnchor.trailing:
             return self.trailingAnchor
-        } else if edge == .top {
+
+        case EdgeAnchor.top:
             return self.topAnchor
-        } else if edge == .bottom {
+
+        case EdgeAnchor.bottom:
             return self.bottomAnchor
-        } else if edge == .centerX {
+
+        case EdgeAnchor.centerX:
             return self.centerXAnchor
-        } else if edge == .centerY {
+
+        case EdgeAnchor.centerY:
             return self.centerYAnchor
-        } else if edge == .width {
+
+        case EdgeAnchor.width:
             return self.widthAnchor
-        } else if edge == .height {
+
+        case EdgeAnchor.height:
             return self.heightAnchor
-        } else {
+
+        default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
         }
     }
