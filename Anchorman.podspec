@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
   spec.source       =  { :git => 'https://github.com/mergesort/Anchorman.git', :tag => "#{spec.version}" }
   spec.homepage     = 'https://github.com/mergesort/Anchorman'
 
-  spec.ios.deployment_target = '8.0'
+  spec.ios.deployment_target = '9.0'
   spec.requires_arc = true
   spec.social_media_url = 'https://twitter.com/mergesort'
   spec.framework    = 'UIKit'
