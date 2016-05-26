@@ -4,7 +4,7 @@
 
 ![That doesn't make any sense](https://github.com/mergesort/anchorman/blob/master/gifs/doesnt_make_sense.gif)
 
-Nah. NSLayoutAnchor is pretty neat! But it's still a bit tedious of an API. Try writing `setTranslatesAutoResizingMasks = true` and `.active = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
+Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Try writing `.translatesAutoresizingMaskIntoConstraints = true` and `.active = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
 
 ![I don't know what we're yelling about!](https://github.com/mergesort/anchorman/blob/master/gifs/yelling.gif)
 
