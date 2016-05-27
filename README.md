@@ -25,7 +25,7 @@ myView.pinToView(someCoolerButton)
 Ah, ok. Easy enough… How about pinning my label to the left and right side of it's superview… and with insets… and center it in my view.
 
 ```swift
-MYCAPITALIZEDLABEL.pinToSuperview([ .leading,(10.0) .trailing(10.0), .centerX, .centerY ])
+MYCAPITALIZEDLABEL.pinToSuperview([ .leading(10.0), .trailing(10.0), .centerY ])
 ```
 
 Whoa, that was neat! You can specify a group of edges you want to pin to, and their offsets. Swift enums are the best!
