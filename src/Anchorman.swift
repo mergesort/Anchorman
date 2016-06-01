@@ -155,6 +155,8 @@ public extension UIView {
     }
 
     func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+    
         let fromAnchor = self.anchorForEdge(edge)
         let toAnchor = ofView.anchorForEdge(toEdge)
 
