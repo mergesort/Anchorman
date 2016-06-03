@@ -181,7 +181,7 @@ public extension UIView {
         return constraint
     }
 
-    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], activate: Bool = true) -> [NSLayoutConstraint] {
+    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         let addConstraint: (sizeAnchor: SizeAnchor, currentDimension: NSLayoutDimension) -> NSLayoutConstraint? = { sizeAnchor, currentDimension in
             if sizeAnchors.contains(sizeAnchor) {
                 let constant: CGFloat
@@ -196,7 +196,15 @@ public extension UIView {
                     priority = UILayoutPriorityRequired
                 }
 
-                let constraint = currentDimension.constraintEqualToConstant(constant)
+                let constraint: NSLayoutConstraint
+                if relation == .GreaterThanOrEqual {
+                    constraint = currentDimension.constraintGreaterThanOrEqualToConstant(constant)
+                } else if relation == .LessThanOrEqual {
+                    constraint = currentDimension.constraintLessThanOrEqualToConstant(constant)
+                } else {
+                    constraint = currentDimension.constraintEqualToConstant(constant)
+                }
+
                 constraint.priority = priority
                 return constraint
             }
