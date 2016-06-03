@@ -104,7 +104,7 @@ public extension UIView {
 
 public extension UIView {
 
-    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allEdges, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allEdges, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
             return self.pinToView(superview, edges: edges, activate: activate)
         } else {
@@ -112,7 +112,7 @@ public extension UIView {
         }
     }
 
-    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allEdges, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allEdges, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         let addConstraint: (edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
@@ -129,7 +129,15 @@ public extension UIView {
 
                 let currentAnchor = self.anchorForEdge(edge)
                 let viewAnchor = view.anchorForEdge(edge)
-                let constraint = currentAnchor.constraintEqualToAnchor(viewAnchor, constant: constant)
+                let constraint: NSLayoutConstraint
+                if relation == .GreaterThanOrEqual {
+                    constraint = currentAnchor.constraintGreaterThanOrEqualToAnchor(viewAnchor, constant: constant)
+                } else if relation == .LessThanOrEqual {
+                    constraint = currentAnchor.constraintLessThanOrEqualToAnchor(viewAnchor, constant: constant)
+                } else {
+                    constraint = currentAnchor.constraintEqualToAnchor(viewAnchor, constant: constant)
+                }
+
                 constraint.priority = priority
                 return constraint
             }
@@ -154,13 +162,19 @@ public extension UIView {
         return viewConstraints
     }
 
-    func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
-        self.translatesAutoresizingMaskIntoConstraints = false
-    
+    func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .Equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
         let fromAnchor = self.anchorForEdge(edge)
         let toAnchor = ofView.anchorForEdge(toEdge)
 
-        let constraint = fromAnchor.constraintEqualToAnchor(toAnchor, constant: constant)
+        let constraint: NSLayoutConstraint
+        if relation == .GreaterThanOrEqual {
+            constraint = fromAnchor.constraintGreaterThanOrEqualToAnchor(toAnchor, constant: constant)
+        } else if relation == .LessThanOrEqual {
+            constraint = fromAnchor.constraintLessThanOrEqualToAnchor(toAnchor, constant: constant)
+        } else {
+            constraint = fromAnchor.constraintEqualToAnchor(toAnchor, constant: constant)
+        }
+
         constraint.priority = priority
         constraint.active = activate
 
@@ -238,33 +252,23 @@ public extension UIView {
 private extension UIView {
 
     func anchorForEdge(edge: EdgeAnchor) -> NSLayoutAnchor {
-        switch edge {
-
-        case EdgeAnchor.leading:
+        if edge == .leading {
             return self.leadingAnchor
-
-        case EdgeAnchor.trailing:
+        } else if edge == .trailing {
             return self.trailingAnchor
-
-        case EdgeAnchor.top:
+        } else if edge == .top {
             return self.topAnchor
-
-        case EdgeAnchor.bottom:
+        } else if edge == .bottom {
             return self.bottomAnchor
-
-        case EdgeAnchor.centerX:
+        } else if edge == .centerX {
             return self.centerXAnchor
-
-        case EdgeAnchor.centerY:
+        } else if edge == .centerY {
             return self.centerYAnchor
-
-        case EdgeAnchor.width:
+        } else if edge == .width {
             return self.widthAnchor
-
-        case EdgeAnchor.height:
+        } else if edge == .height {
             return self.heightAnchor
-
-        default:
+        } else {
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
         }
     }
