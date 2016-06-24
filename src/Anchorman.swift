@@ -26,7 +26,7 @@ public struct EdgeAnchor: OptionSetType {
     public static let width = EdgeAnchor(rawValue: 1 << 7)
     public static let height = EdgeAnchor(rawValue: 1 << 8)
 
-    public static let allEdges = [ leading, trailing, top, bottom ]
+    public static let allSides = [ leading, trailing, top, bottom ]
 
     public static func leading(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.leading.rawValue, constant: constant, priority: priority)
@@ -104,7 +104,7 @@ public extension UIView {
 
 public extension UIView {
 
-    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allEdges, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
             return self.pinToView(superview, edges: edges, activate: activate)
         } else {
@@ -112,7 +112,7 @@ public extension UIView {
         }
     }
 
-    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allEdges, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         let addConstraint: (edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
