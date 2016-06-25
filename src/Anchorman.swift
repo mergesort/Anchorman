@@ -184,15 +184,7 @@ public extension UIView {
     func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let currentDimension: NSLayoutDimension
-
-        if sizeAnchor == .width {
-            currentDimension = self.widthAnchor
-        } else if sizeAnchor == .height {
-            currentDimension = self.heightAnchor
-        } else {
-            fatalError("Looks like we sized this constraint up all wrong… 📐")
-        }
+        let currentDimension = self.anchorForSize(sizeAnchor)
 
         let constraint: NSLayoutConstraint
         if relation == .GreaterThanOrEqual {
@@ -211,6 +203,29 @@ public extension UIView {
 
     func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
         return sizeAnchors.map { return self.setSize($0, relation: relation, activate: activate) }
+    }
+
+    func setRelativeSize(sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        let currentDimension: NSLayoutDimension
+
+        let fromDimension = self.anchorForSize(sizeAnchor)
+        let toDimension = ofView.anchorForSize(toSizeAnchor)
+
+        let constraint: NSLayoutConstraint
+        if relation == .GreaterThanOrEqual {
+            constraint = fromDimension.constraintGreaterThanOrEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
+        } else if relation == .LessThanOrEqual {
+            constraint = fromDimension.constraintLessThanOrEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
+        } else {
+            constraint = fromDimension.constraintEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
+        }
+
+        constraint.priority = sizeAnchor.priority
+        constraint.active = activate
+
+        return constraint
     }
 
 }
@@ -267,6 +282,16 @@ private extension UIView {
             return self.heightAnchor
         } else {
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
+        }
+    }
+
+    func anchorForSize(size: SizeAnchor) -> NSLayoutDimension {
+        if size == .width {
+            return self.widthAnchor
+        } else if size == .height {
+            return self.heightAnchor
+        } else {
+            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
         }
     }
 
