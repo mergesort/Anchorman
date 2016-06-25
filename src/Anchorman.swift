@@ -181,46 +181,36 @@ public extension UIView {
         return constraint
     }
 
-    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
-        let addConstraint: (sizeAnchor: SizeAnchor, currentDimension: NSLayoutDimension) -> NSLayoutConstraint? = { sizeAnchor, currentDimension in
-            if sizeAnchors.contains(sizeAnchor) {
-                let constant: CGFloat
-                let priority: UILayoutPriority
-
-                if let index = sizeAnchors.indexOf(sizeAnchor) {
-                    let currentAnchor = sizeAnchors[index]
-                    constant = currentAnchor.constant
-                    priority = currentAnchor.priority
-                } else {
-                    constant = 0.0
-                    priority = UILayoutPriorityRequired
-                }
-
-                let constraint: NSLayoutConstraint
-                if relation == .GreaterThanOrEqual {
-                    constraint = currentDimension.constraintGreaterThanOrEqualToConstant(constant)
-                } else if relation == .LessThanOrEqual {
-                    constraint = currentDimension.constraintLessThanOrEqualToConstant(constant)
-                } else {
-                    constraint = currentDimension.constraintEqualToConstant(constant)
-                }
-
-                constraint.priority = priority
-                return constraint
-            }
-
-            return nil
-        }
-
+    func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let widthConstraint = addConstraint(sizeAnchor: .width, currentDimension: self.widthAnchor)
-        let heightConstraint = addConstraint(sizeAnchor: .height, currentDimension: self.heightAnchor)
+        let currentDimension: NSLayoutDimension
 
-        let viewConstraints = [ widthConstraint, heightConstraint ].flatMap { $0 }
-        viewConstraints.setActive(activate)
+        if sizeAnchor == .width {
+            currentDimension = self.widthAnchor
+        } else if sizeAnchor == .height {
+            currentDimension = self.heightAnchor
+        } else {
+            fatalError("Looks like we sized this constraint up all wrong… 📐")
+        }
 
-        return viewConstraints
+        let constraint: NSLayoutConstraint
+        if relation == .GreaterThanOrEqual {
+            constraint = currentDimension.constraintGreaterThanOrEqualToConstant(sizeAnchor.constant)
+        } else if relation == .LessThanOrEqual {
+            constraint = currentDimension.constraintLessThanOrEqualToConstant(sizeAnchor.constant)
+        } else {
+            constraint = currentDimension.constraintEqualToConstant(sizeAnchor.constant)
+        }
+
+        constraint.priority = sizeAnchor.priority
+        constraint.active = activate
+
+        return constraint
+    }
+
+    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        return sizeAnchors.map { return self.setSize($0, relation: relation, activate: activate) }
     }
 
 }
@@ -242,7 +232,6 @@ public extension NSLayoutConstraint {
 
 public extension UIView {
 
-    // Set leading, trailing, top, and bottom anchors to equal to another view
     @available(*, unavailable, message="Only to be used from Objective-C") func objc_pinToView(view: UIView, inset: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
         return self._objcPinToView(view)
     }
