@@ -127,8 +127,8 @@ public extension UIView {
                     priority = UILayoutPriorityRequired
                 }
 
-                let currentAnchor = self.anchorForEdge(edge)
-                let viewAnchor = view.anchorForEdge(edge)
+                let currentAnchor = self.layoutAnchorForEdge(edge)
+                let viewAnchor = view.layoutAnchorForEdge(edge)
                 let constraint: NSLayoutConstraint
                 if relation == .GreaterThanOrEqual {
                     constraint = currentAnchor.constraintGreaterThanOrEqualToAnchor(viewAnchor, constant: constant)
@@ -163,8 +163,8 @@ public extension UIView {
     }
 
     func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .Equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
-        let fromAnchor = self.anchorForEdge(edge)
-        let toAnchor = ofView.anchorForEdge(toEdge)
+        let fromAnchor = self.layoutAnchorForEdge(edge)
+        let toAnchor = ofView.layoutAnchorForEdge(toEdge)
 
         let constraint: NSLayoutConstraint
         if relation == .GreaterThanOrEqual {
@@ -184,7 +184,7 @@ public extension UIView {
     func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let currentDimension = self.anchorForSize(sizeAnchor)
+        let currentDimension = self.layoutDimensionForAnchor(sizeAnchor)
 
         let constraint: NSLayoutConstraint
         if relation == .GreaterThanOrEqual {
@@ -210,8 +210,8 @@ public extension UIView {
 
         let currentDimension: NSLayoutDimension
 
-        let fromDimension = self.anchorForSize(sizeAnchor)
-        let toDimension = ofView.anchorForSize(toSizeAnchor)
+        let fromDimension = self.layoutDimensionForAnchor(sizeAnchor)
+        let toDimension = ofView.layoutDimensionForAnchor(toSizeAnchor)
 
         let constraint: NSLayoutConstraint
         if relation == .GreaterThanOrEqual {
@@ -263,35 +263,45 @@ public extension UIView {
 
 private extension UIView {
 
-    func anchorForEdge(edge: EdgeAnchor) -> NSLayoutAnchor {
-        if edge == .leading {
-            return self.leadingAnchor
-        } else if edge == .trailing {
-            return self.trailingAnchor
-        } else if edge == .top {
-            return self.topAnchor
-        } else if edge == .bottom {
-            return self.bottomAnchor
-        } else if edge == .centerX {
-            return self.centerXAnchor
-        } else if edge == .centerY {
-            return self.centerYAnchor
-        } else if edge == .width {
+    func layoutDimensionForAnchor(size: SizeAnchor) -> NSLayoutDimension {
+        switch size {
+
+        case SizeAnchor.width:
             return self.widthAnchor
-        } else if edge == .height {
+
+        case SizeAnchor.height:
             return self.heightAnchor
-        } else {
-            fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
+
+        default:
+            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
+
         }
     }
 
-    func anchorForSize(size: SizeAnchor) -> NSLayoutDimension {
-        if size == .width {
-            return self.widthAnchor
-        } else if size == .height {
-            return self.heightAnchor
-        } else {
-            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
+    func layoutAnchorForEdge(edge: EdgeAnchor) -> NSLayoutAnchor {
+        switch edge {
+
+        case EdgeAnchor.leading:
+            return self.leadingAnchor
+
+        case EdgeAnchor.trailing:
+            return self.trailingAnchor
+
+        case EdgeAnchor.top:
+            return self.topAnchor
+
+        case EdgeAnchor.bottom:
+            return self.bottomAnchor
+
+        case EdgeAnchor.centerX:
+            return self.centerXAnchor
+
+        case EdgeAnchor.centerY:
+            return self.centerYAnchor
+
+        default:
+            fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
+            
         }
     }
 
@@ -309,6 +319,7 @@ private extension UIView {
 }
 
 private extension Array where Element: NSLayoutConstraint {
+
     func setActive(active: Bool) {
         if active {
             NSLayoutConstraint.activateConstraints(self)
@@ -316,4 +327,5 @@ private extension Array where Element: NSLayoutConstraint {
             NSLayoutConstraint.deactivateConstraints(self)
         }
     }
+
 }
