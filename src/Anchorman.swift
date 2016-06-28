@@ -299,6 +299,12 @@ private extension UIView {
         case EdgeAnchor.centerY:
             return self.centerYAnchor
 
+        case EdgeAnchor.width:
+            return self.widthAnchor
+
+        case EdgeAnchor.height:
+            return self.heightAnchor
+
         default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
             
