@@ -208,8 +208,6 @@ public extension UIView {
     func setRelativeSize(sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let currentDimension: NSLayoutDimension
-
         let fromDimension = self.layoutDimensionForAnchor(sizeAnchor)
         let toDimension = ofView.layoutDimensionForAnchor(toSizeAnchor)
 
