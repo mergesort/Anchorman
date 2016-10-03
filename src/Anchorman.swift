@@ -1,6 +1,6 @@
 import UIKit
 
-public struct EdgeAnchor: OptionSetType {
+public struct EdgeAnchor: OptionSet {
     public let rawValue: Int
     public let constant: CGFloat
     public let priority: UILayoutPriority
@@ -62,7 +62,7 @@ public struct EdgeAnchor: OptionSetType {
 
 }
 
-public struct SizeAnchor: OptionSetType {
+public struct SizeAnchor: OptionSet {
     public let rawValue: Int
     public let constant: CGFloat
     public let priority: UILayoutPriority
@@ -104,21 +104,21 @@ public extension UIView {
 
 public extension UIView {
 
-    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
-            return self.pinToView(superview, edges: edges, activate: activate)
+            return self.pinToView(view: superview, edges: edges, activate: activate)
         } else {
             fatalError("Cannot pin to a nil superview")
         }
     }
 
-    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
-        let addConstraint: (edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
+    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
                 let priority: UILayoutPriority
 
-                if let index = edges.indexOf(edge) {
+                if let index = edges.index(of: edge) {
                     let currentEdge = edges[index]
                     constant = currentEdge.constant
                     priority = currentEdge.priority
@@ -127,15 +127,16 @@ public extension UIView {
                     priority = UILayoutPriorityRequired
                 }
 
-                let currentAnchor = self.layoutAnchorForEdge(edge)
-                let viewAnchor = view.layoutAnchorForEdge(edge)
+                let currentAnchor = self.layoutAnchor(edge: edge)
+                let viewAnchor = view.layoutAnchor(edge: edge)
                 let constraint: NSLayoutConstraint
-                if relation == .GreaterThanOrEqual {
-                    constraint = currentAnchor.constraintGreaterThanOrEqualToAnchor(viewAnchor, constant: constant)
-                } else if relation == .LessThanOrEqual {
-                    constraint = currentAnchor.constraintLessThanOrEqualToAnchor(viewAnchor, constant: constant)
+                if relation == .greaterThanOrEqual {
+                    NSLayoutYAxisAnchor().constraint(greaterThanOrEqualTo: NSLayoutYAxisAnchor(), constant: 0)
+                    constraint = currentAnchor.constraint(greaterThanOrEqualTo: viewAnchor, constant: constant)
+                } else if relation == .lessThanOrEqual {
+                    constraint = currentAnchor.constraint(lessThanOrEqualTo: viewAnchor, constant: constant)
                 } else {
-                    constraint = currentAnchor.constraintEqualToAnchor(viewAnchor, constant: constant)
+                    constraint = currentAnchor.constraint(equalTo: viewAnchor, constant: constant)
                 }
 
                 constraint.priority = priority
@@ -145,83 +146,83 @@ public extension UIView {
             return nil
         }
 
-        let leadingConstraint = addConstraint(edge: .leading)
-        let trailingConstraint = addConstraint(edge: .trailing)
-        let topConstraint = addConstraint(edge: .top)
-        let bottomConstraint = addConstraint(edge: .bottom)
-        let centerXConstraint = addConstraint(edge: .centerX)
-        let centerYConstraint = addConstraint(edge: .centerY)
-        let widthConstraint = addConstraint(edge: .width)
-        let heightConstraint = addConstraint(edge: .height)
+        let leadingConstraint = addConstraint(.leading)
+        let trailingConstraint = addConstraint(.trailing)
+        let topConstraint = addConstraint(.top)
+        let bottomConstraint = addConstraint(.bottom)
+        let centerXConstraint = addConstraint(.centerX)
+        let centerYConstraint = addConstraint(.centerY)
+        let widthConstraint = addConstraint(.width)
+        let heightConstraint = addConstraint(.height)
 
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let viewConstraints = [ leadingConstraint, trailingConstraint, topConstraint, bottomConstraint, centerXConstraint, centerYConstraint, widthConstraint, heightConstraint ].flatMap { $0 }
-        viewConstraints.setActive(activate)
+        viewConstraints.setActive(active: activate)
 
         return viewConstraints
     }
 
-    func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .Equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
-        let fromAnchor = self.layoutAnchorForEdge(edge)
-        let toAnchor = ofView.layoutAnchorForEdge(toEdge)
+    func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+        let fromAnchor = self.layoutAnchor(edge: edge)
+        let toAnchor = ofView.layoutAnchor(edge: toEdge)
 
         let constraint: NSLayoutConstraint
-        if relation == .GreaterThanOrEqual {
-            constraint = fromAnchor.constraintGreaterThanOrEqualToAnchor(toAnchor, constant: constant)
-        } else if relation == .LessThanOrEqual {
-            constraint = fromAnchor.constraintLessThanOrEqualToAnchor(toAnchor, constant: constant)
+        if relation == .greaterThanOrEqual {
+            constraint = fromAnchor.constraint(greaterThanOrEqualTo: toAnchor, constant: constant)
+        } else if relation == .lessThanOrEqual {
+            constraint = fromAnchor.constraint(lessThanOrEqualTo: toAnchor, constant: constant)
         } else {
-            constraint = fromAnchor.constraintEqualToAnchor(toAnchor, constant: constant)
+            constraint = fromAnchor.constraint(equalTo: toAnchor, constant: constant)
         }
 
         constraint.priority = priority
-        constraint.active = activate
+        constraint.isActive = activate
 
         return constraint
     }
 
-    func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
+    func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let currentDimension = self.layoutDimensionForAnchor(sizeAnchor)
+        let currentDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
 
         let constraint: NSLayoutConstraint
-        if relation == .GreaterThanOrEqual {
-            constraint = currentDimension.constraintGreaterThanOrEqualToConstant(sizeAnchor.constant)
-        } else if relation == .LessThanOrEqual {
-            constraint = currentDimension.constraintLessThanOrEqualToConstant(sizeAnchor.constant)
+        if relation == .greaterThanOrEqual {
+            constraint = currentDimension.constraint(greaterThanOrEqualToConstant: sizeAnchor.constant)
+        } else if relation == .lessThanOrEqual {
+            constraint = currentDimension.constraint(lessThanOrEqualToConstant: sizeAnchor.constant)
         } else {
-            constraint = currentDimension.constraintEqualToConstant(sizeAnchor.constant)
+            constraint = currentDimension.constraint(equalToConstant: sizeAnchor.constant)
         }
 
         constraint.priority = sizeAnchor.priority
-        constraint.active = activate
+        constraint.isActive = activate
 
         return constraint
     }
 
-    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .Equal, activate: Bool = true) -> [NSLayoutConstraint] {
-        return sizeAnchors.map { return self.setSize($0, relation: relation, activate: activate) }
+    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        return sizeAnchors.map { return self.setSize(sizeAnchor: $0, relation: relation, activate: activate) }
     }
 
-    func setRelativeSize(sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .Equal, activate: Bool = true) -> NSLayoutConstraint {
+    func setRelativeSize(sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let fromDimension = self.layoutDimensionForAnchor(sizeAnchor)
-        let toDimension = ofView.layoutDimensionForAnchor(toSizeAnchor)
+        let fromDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
+        let toDimension = ofView.layoutDimensionForAnchor(size: toSizeAnchor)
 
         let constraint: NSLayoutConstraint
-        if relation == .GreaterThanOrEqual {
-            constraint = fromDimension.constraintGreaterThanOrEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
-        } else if relation == .LessThanOrEqual {
-            constraint = fromDimension.constraintLessThanOrEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
+        if relation == .greaterThanOrEqual {
+            constraint = fromDimension.constraint(greaterThanOrEqualTo: toDimension, multiplier: multiplier, constant: constant)
+        } else if relation == .lessThanOrEqual {
+            constraint = fromDimension.constraint(lessThanOrEqualTo: toDimension, multiplier: multiplier, constant: constant)
         } else {
-            constraint = fromDimension.constraintEqualToAnchor(toDimension, multiplier: multiplier, constant: constant)
+            constraint = fromDimension.constraint(equalTo: toDimension, multiplier: multiplier, constant: constant)
         }
 
         constraint.priority = sizeAnchor.priority
-        constraint.active = activate
+        constraint.isActive = activate
 
         return constraint
     }
@@ -231,31 +232,59 @@ public extension UIView {
 public extension NSLayoutConstraint {
 
     static func activateAllConstraints(constraints: [[NSLayoutConstraint]]) {
-        NSLayoutConstraint.activateConstraints(constraints.flatMap { $0 })
+        NSLayoutConstraint.activate(constraints.flatMap { $0 })
     }
 
     static func deactivateAllConstraints(constraints: [[NSLayoutConstraint]]) {
-        NSLayoutConstraint.deactivateConstraints(constraints.flatMap { $0 })
+        NSLayoutConstraint.deactivate(constraints.flatMap { $0 })
     }
 
 }
 
+private enum TypedAnchor {
+    case X(NSLayoutXAxisAnchor)
+    case Y(NSLayoutYAxisAnchor)
+    case Dimesion(NSLayoutDimension)
 
-// MARK: Objective-C API
-
-public extension UIView {
-
-    @available(*, unavailable, message="Only to be used from Objective-C") func objc_pinToView(view: UIView, inset: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
-        return self._objcPinToView(view)
-    }
-
-    @available(*, unavailable, message="Only to be used from Objective-C") func objc_pinToSuperview(inset: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
-        if let superview = self.superview {
-            return self._objcPinToView(superview, inset: inset)
-        } else {
-            fatalError("Cannot pin to a nil superview")
+    func constraint(equalTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
+        if case .X(let x) = self, case .X(let y) = anchor {
+            return x.constraint(equalTo: y, constant: c)
         }
+        if case .Y(let x) = self, case .Y(let y) = anchor {
+            return x.constraint(equalTo: y, constant: c)
+        }
+        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+            return x.constraint(equalTo: y, constant: c)
+        }
+        fatalError("This should not happen")
     }
+
+    func constraint(greaterThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
+        if case .X(let x) = self, case .X(let y) = anchor {
+            return x.constraint(greaterThanOrEqualTo: y, constant: c)
+        }
+        if case .Y(let x) = self, case .Y(let y) = anchor {
+            return x.constraint(greaterThanOrEqualTo: y, constant: c)
+        }
+        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+            return x.constraint(greaterThanOrEqualTo: y, constant: c)
+        }
+        fatalError("This should not happen")
+    }
+
+    func constraint(lessThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
+        if case .X(let x) = self, case .X(let y) = anchor {
+            return x.constraint(lessThanOrEqualTo: y, constant: c)
+        }
+        if case .Y(let x) = self, case .Y(let y) = anchor {
+            return x.constraint(lessThanOrEqualTo: y, constant: c)
+        }
+        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+            return x.constraint(lessThanOrEqualTo: y, constant: c)
+        }
+        fatalError("This should not happen")
+    }
+
 
 }
 
@@ -276,32 +305,32 @@ private extension UIView {
         }
     }
 
-    func layoutAnchorForEdge(edge: EdgeAnchor) -> NSLayoutAnchor {
+    func layoutAnchor(edge: EdgeAnchor) -> TypedAnchor {
         switch edge {
 
         case EdgeAnchor.leading:
-            return self.leadingAnchor
+            return .X(self.leadingAnchor)
 
         case EdgeAnchor.trailing:
-            return self.trailingAnchor
+            return .X(self.trailingAnchor)
 
         case EdgeAnchor.top:
-            return self.topAnchor
+            return .Y(self.topAnchor)
 
         case EdgeAnchor.bottom:
-            return self.bottomAnchor
+            return .Y(self.bottomAnchor)
 
         case EdgeAnchor.centerX:
-            return self.centerXAnchor
+            return .X(self.centerXAnchor)
 
         case EdgeAnchor.centerY:
-            return self.centerYAnchor
+            return .Y(self.centerYAnchor)
 
         case EdgeAnchor.width:
-            return self.widthAnchor
+            return .Dimesion(self.widthAnchor)
 
         case EdgeAnchor.height:
-            return self.heightAnchor
+            return .Dimesion(self.heightAnchor)
 
         default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
@@ -309,12 +338,12 @@ private extension UIView {
         }
     }
 
-    func _objcPinToView(view: UIView, inset: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
+    func _objcPinToView(view: UIView, inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
         let viewConstraints: [NSLayoutConstraint] = [
-            self.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: inset.left),
-            self.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: inset.right),
-            self.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: inset.top),
-            self.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: inset.bottom),
+            self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset.left),
+            self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: inset.right),
+            self.topAnchor.constraint(equalTo: view.topAnchor, constant: inset.top),
+            self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: inset.bottom),
             ]
 
         return viewConstraints
@@ -326,9 +355,9 @@ private extension Array where Element: NSLayoutConstraint {
 
     func setActive(active: Bool) {
         if active {
-            NSLayoutConstraint.activateConstraints(self)
+            NSLayoutConstraint.activate(self)
         } else {
-            NSLayoutConstraint.deactivateConstraints(self)
+            NSLayoutConstraint.deactivate(self)
         }
     }
 
