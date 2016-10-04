@@ -242,44 +242,44 @@ public extension NSLayoutConstraint {
 }
 
 private enum TypedAnchor {
-    case X(NSLayoutXAxisAnchor)
-    case Y(NSLayoutYAxisAnchor)
-    case Dimesion(NSLayoutDimension)
+    case x(NSLayoutXAxisAnchor)
+    case y(NSLayoutYAxisAnchor)
+    case dimension(NSLayoutDimension)
 
     func constraint(equalTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .X(let x) = self, case .X(let y) = anchor {
+        if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
-        if case .Y(let x) = self, case .Y(let y) = anchor {
+        if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
-        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+        if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
         fatalError("This should not happen")
     }
 
     func constraint(greaterThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .X(let x) = self, case .X(let y) = anchor {
+        if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
-        if case .Y(let x) = self, case .Y(let y) = anchor {
+        if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
-        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+        if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
         fatalError("This should not happen")
     }
 
     func constraint(lessThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .X(let x) = self, case .X(let y) = anchor {
+        if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
-        if case .Y(let x) = self, case .Y(let y) = anchor {
+        if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
-        if case .Dimesion(let x) = self, case .Dimesion(let y) = anchor {
+        if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
         fatalError("This should not happen")
@@ -309,28 +309,28 @@ private extension UIView {
         switch edge {
 
         case EdgeAnchor.leading:
-            return .X(self.leadingAnchor)
+            return .x(self.leadingAnchor)
 
         case EdgeAnchor.trailing:
-            return .X(self.trailingAnchor)
+            return .x(self.trailingAnchor)
 
         case EdgeAnchor.top:
-            return .Y(self.topAnchor)
+            return .y(self.topAnchor)
 
         case EdgeAnchor.bottom:
-            return .Y(self.bottomAnchor)
+            return .y(self.bottomAnchor)
 
         case EdgeAnchor.centerX:
-            return .X(self.centerXAnchor)
+            return .x(self.centerXAnchor)
 
         case EdgeAnchor.centerY:
-            return .Y(self.centerYAnchor)
+            return .y(self.centerYAnchor)
 
         case EdgeAnchor.width:
-            return .Dimesion(self.widthAnchor)
+            return .dimension(self.widthAnchor)
 
         case EdgeAnchor.height:
-            return .Dimesion(self.heightAnchor)
+            return .dimension(self.heightAnchor)
 
         default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
