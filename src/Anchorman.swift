@@ -146,8 +146,9 @@ public extension UIView {
                     priority = UILayoutPriorityRequired
                 }
 
-                let currentAnchor = self.layoutAnchor(edge: edge)
-                let viewAnchor = view.layoutAnchor(edge: edge)
+                let currentAnchor = edge.typedAnchorForView(view: self)
+                let viewAnchor = edge.typedAnchorForView(view: view)
+
                 let constraint: NSLayoutConstraint
                 if relation == .greaterThanOrEqual {
                     NSLayoutYAxisAnchor().constraint(greaterThanOrEqualTo: NSLayoutYAxisAnchor(), constant: 0)
@@ -183,9 +184,10 @@ public extension UIView {
     }
 
     @discardableResult
-    func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
-        let fromAnchor = self.layoutAnchor(edge: edge)
-        let toAnchor = ofView.layoutAnchor(edge: toEdge)
+    func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+
+        let fromAnchor = edge.typedAnchorForView(view: self)
+        let toAnchor = edge.typedAnchorForView(view: view)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
@@ -206,7 +208,7 @@ public extension UIView {
     func setSize(_ sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let currentDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
+        let currentDimension = sizeAnchor.layoutDimensionForView(view: self)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
@@ -229,11 +231,11 @@ public extension UIView {
     }
 
     @discardableResult
-    func setRelativeSize(_ sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
+    func setRelativeSize(_ sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let fromDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
-        let toDimension = ofView.layoutDimensionForAnchor(size: toSizeAnchor)
+        let fromDimension = sizeAnchor.layoutDimensionForView(view: self)
+        let toDimension = toSizeAnchor.layoutDimensionForView(view: view)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
@@ -287,99 +289,90 @@ private enum TypedAnchor {
     case y(NSLayoutYAxisAnchor)
     case dimension(NSLayoutDimension)
 
-    func constraint(equalTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .x(let x) = self, case .x(let y) = anchor {
-            return x.constraint(equalTo: y, constant: c)
-        }
+    func constraint(equalTo anchor: TypedAnchor, constant: CGFloat) -> NSLayoutConstraint {
+        switch (self, anchor) {
 
-        if case .y(let x) = self, case .y(let y) = anchor {
-            return x.constraint(equalTo: y, constant: c)
-        }
+        case let (.x(fromConstraint), .x(toConstraint)):
+            return fromConstraint.constraint(equalTo: toConstraint, constant: constant)
 
-        if case .dimension(let x) = self, case .dimension(let y) = anchor {
-            return x.constraint(equalTo: y, constant: c)
-        }
+        case let(.y(fromConstraint), .y(toConstraint)):
+            return fromConstraint.constraint(equalTo: toConstraint, constant: constant)
 
-        fatalError("This should not happen")
+        case let(.dimension(fromConstraint), .dimension(toConstraint)):
+            return fromConstraint.constraint(equalTo: toConstraint, constant: constant)
+
+        default:
+            fatalError("How do dare you try and constrain me, illegally!")
+
+        }
     }
 
-    func constraint(greaterThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .x(let x) = self, case .x(let y) = anchor {
-            return x.constraint(greaterThanOrEqualTo: y, constant: c)
-        }
+    func constraint(greaterThanOrEqualTo anchor: TypedAnchor, constant: CGFloat) -> NSLayoutConstraint {
+        switch (self, anchor) {
 
-        if case .y(let x) = self, case .y(let y) = anchor {
-            return x.constraint(greaterThanOrEqualTo: y, constant: c)
-        }
+        case let (.x(fromConstraint), .x(toConstraint)):
+            return fromConstraint.constraint(greaterThanOrEqualTo: toConstraint, constant: constant)
 
-        if case .dimension(let x) = self, case .dimension(let y) = anchor {
-            return x.constraint(greaterThanOrEqualTo: y, constant: c)
-        }
+        case let(.y(fromConstraint), .y(toConstraint)):
+            return fromConstraint.constraint(greaterThanOrEqualTo: toConstraint, constant: constant)
 
-        fatalError("This should not happen")
+        case let(.dimension(fromConstraint), .dimension(toConstraint)):
+            return fromConstraint.constraint(greaterThanOrEqualTo: toConstraint, constant: constant)
+
+        default:
+            fatalError("How do dare you try and constrain me, illegally!")
+
+        }
     }
 
-    func constraint(lessThanOrEqualTo anchor: TypedAnchor, constant c: CGFloat) -> NSLayoutConstraint {
-        if case .x(let x) = self, case .x(let y) = anchor {
-            return x.constraint(lessThanOrEqualTo: y, constant: c)
-        }
+    func constraint(lessThanOrEqualTo anchor: TypedAnchor, constant: CGFloat) -> NSLayoutConstraint {
+        switch (self, anchor) {
 
-        if case .y(let x) = self, case .y(let y) = anchor {
-            return x.constraint(lessThanOrEqualTo: y, constant: c)
-        }
+        case let (.x(fromConstraint), .x(toConstraint)):
+            return fromConstraint.constraint(lessThanOrEqualTo: toConstraint, constant: constant)
 
-        if case .dimension(let x) = self, case .dimension(let y) = anchor {
-            return x.constraint(lessThanOrEqualTo: y, constant: c)
-        }
+        case let(.y(fromConstraint), .y(toConstraint)):
+            return fromConstraint.constraint(lessThanOrEqualTo: toConstraint, constant: constant)
 
-        fatalError("This should not happen")
+        case let(.dimension(fromConstraint), .dimension(toConstraint)):
+            return fromConstraint.constraint(lessThanOrEqualTo: toConstraint, constant: constant)
+
+        default:
+            fatalError("How do dare you try and constrain me, illegally!")
+
+        }
     }
 
 }
 
-private extension UIView {
+private extension EdgeAnchor {
 
-    func layoutDimensionForAnchor(size: SizeAnchor) -> NSLayoutDimension {
-        switch size {
-
-        case SizeAnchor.width:
-            return self.widthAnchor
-
-        case SizeAnchor.height:
-            return self.heightAnchor
-
-        default:
-            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
-
-        }
-    }
-
-    func layoutAnchor(edge: EdgeAnchor) -> TypedAnchor {
-        switch edge {
+    func typedAnchorForView(view: UIView) -> TypedAnchor {
+        switch self {
 
         case EdgeAnchor.leading:
-            return .x(self.leadingAnchor)
+            return .x(view.leadingAnchor)
 
         case EdgeAnchor.trailing:
-            return .x(self.trailingAnchor)
+            return .x(view.trailingAnchor)
 
         case EdgeAnchor.top:
-            return .y(self.topAnchor)
+            return .y(view.topAnchor)
 
         case EdgeAnchor.bottom:
-            return .y(self.bottomAnchor)
+            return .y(view.bottomAnchor)
 
         case EdgeAnchor.centerX:
-            return .x(self.centerXAnchor)
+            return .x(view.centerXAnchor)
 
         case EdgeAnchor.centerY:
-            return .y(self.centerYAnchor)
+            return .y(view.centerYAnchor)
 
         case EdgeAnchor.width:
-            return .dimension(self.widthAnchor)
+            return .dimension(view.widthAnchor)
 
         case EdgeAnchor.height:
-            return .dimension(self.heightAnchor)
+            return .dimension(view.heightAnchor)
 
         default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
@@ -387,6 +380,28 @@ private extension UIView {
         }
     }
 
+}
+
+private extension SizeAnchor {
+
+    func layoutDimensionForView(view: UIView) -> NSLayoutDimension {
+        switch self {
+
+        case SizeAnchor.width:
+            return view.widthAnchor
+
+        case SizeAnchor.height:
+            return view.heightAnchor
+
+        default:
+            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
+
+        }
+    }
+
+}
+
+private extension UIView {
 
     @discardableResult
     func _objcPinToView(view: UIView, inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
@@ -395,11 +410,11 @@ private extension UIView {
             self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: inset.right),
             self.topAnchor.constraint(equalTo: view.topAnchor, constant: inset.top),
             self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: inset.bottom),
-            ]
+        ]
         
         return viewConstraints
     }
-    
+
 }
 
 private extension Array where Element: NSLayoutConstraint {
