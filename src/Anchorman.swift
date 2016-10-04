@@ -1,15 +1,28 @@
 import UIKit
 
-public struct EdgeAnchor: OptionSet {
+public protocol Anchor {
+
+    var rawValue: Int { get }
+    var constant: CGFloat { get }
+    var priority: UILayoutPriority { get }
+
+    init(rawValue: Int, constant: CGFloat, priority: UILayoutPriority)
+
+}
+
+public extension Anchor {
+
+    public init(rawValue: Int) {
+        self.init(rawValue: rawValue, constant: 0.0, priority: UILayoutPriorityRequired)
+    }
+
+}
+
+public struct EdgeAnchor: OptionSet, Anchor {
+
     public let rawValue: Int
     public let constant: CGFloat
     public let priority: UILayoutPriority
-
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-        self.constant = 0.0
-        self.priority = UILayoutPriorityRequired
-    }
 
     public init(rawValue: Int, constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) {
         self.rawValue = rawValue
@@ -70,16 +83,10 @@ public struct EdgeAnchor: OptionSet {
 
 }
 
-public struct SizeAnchor: OptionSet {
+public struct SizeAnchor: OptionSet, Anchor {
     public let rawValue: Int
     public let constant: CGFloat
     public let priority: UILayoutPriority
-
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-        self.constant = 0.0
-        self.priority = UILayoutPriorityRequired
-    }
 
     public init(rawValue: Int, constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) {
         self.rawValue = rawValue
