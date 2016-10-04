@@ -28,35 +28,43 @@ public struct EdgeAnchor: OptionSet {
 
     public static let allSides = [ leading, trailing, top, bottom ]
 
-    public static func leading(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func leading(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.leading.rawValue, constant: constant, priority: priority)
     }
 
-    public static func trailing(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func trailing(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.trailing.rawValue, constant: constant, priority: priority)
     }
 
-    public static func top(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func top(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.top.rawValue, constant: constant, priority: priority)
     }
 
-    public static func bottom(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func bottom(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.bottom.rawValue, constant: constant, priority: priority)
     }
 
-    public static func centerX(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func centerX(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.centerX.rawValue, constant: constant, priority: priority)
     }
 
-    public static func centerY(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func centerY(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.centerY.rawValue, constant: constant, priority: priority)
     }
 
-    public static func width(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func width(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.width.rawValue, constant: constant, priority: priority)
     }
 
-    public static func height(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
+    @discardableResult
+    public static func height(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.height.rawValue, constant: constant, priority: priority)
     }
 
@@ -82,11 +90,13 @@ public struct SizeAnchor: OptionSet {
     public static let width = SizeAnchor(rawValue: 1 << 1)
     public static let height = SizeAnchor(rawValue: 1 << 2)
 
-    public static func width(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> SizeAnchor {
+    @discardableResult
+    public static func width(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> SizeAnchor {
         return SizeAnchor(rawValue: SizeAnchor.width.rawValue, constant: constant, priority: priority)
     }
 
-    public static func height(constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> SizeAnchor {
+    @discardableResult
+    public static func height(_ constant: CGFloat, priority: UILayoutPriority = UILayoutPriorityRequired) -> SizeAnchor {
         return SizeAnchor(rawValue: SizeAnchor.height.rawValue, constant: constant, priority: priority)
     }
 
@@ -104,15 +114,17 @@ public extension UIView {
 
 public extension UIView {
 
-    func pinToSuperview(edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    @discardableResult
+    func pinToSuperview(_ edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
-            return self.pinToView(view: superview, edges: edges, activate: activate)
+            return self.pinToView(superview, edges: edges, activate: activate)
         } else {
             fatalError("Cannot pin to a nil superview")
         }
     }
 
-    func pinToView(view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    @discardableResult
+    func pinToView(_ view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
@@ -163,7 +175,8 @@ public extension UIView {
         return viewConstraints
     }
 
-    func pinEdge(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+    @discardableResult
+    func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
         let fromAnchor = self.layoutAnchor(edge: edge)
         let toAnchor = ofView.layoutAnchor(edge: toEdge)
 
@@ -182,7 +195,8 @@ public extension UIView {
         return constraint
     }
 
-    func setSize(sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
+    @discardableResult
+    func setSize(_ sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let currentDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
@@ -202,11 +216,13 @@ public extension UIView {
         return constraint
     }
 
-    func setSize(sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
-        return sizeAnchors.map { return self.setSize(sizeAnchor: $0, relation: relation, activate: activate) }
+    @discardableResult
+    func setSize(_ sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        return sizeAnchors.map { return self.setSize($0, relation: relation, activate: activate) }
     }
 
-    func setRelativeSize(sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
+    @discardableResult
+    func setRelativeSize(_ sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let fromDimension = self.layoutDimensionForAnchor(size: sizeAnchor)
@@ -250,12 +266,15 @@ private enum TypedAnchor {
         if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
+
         if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
+
         if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(equalTo: y, constant: c)
         }
+
         fatalError("This should not happen")
     }
 
@@ -263,12 +282,15 @@ private enum TypedAnchor {
         if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
+
         if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
+
         if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(greaterThanOrEqualTo: y, constant: c)
         }
+
         fatalError("This should not happen")
     }
 
@@ -276,15 +298,17 @@ private enum TypedAnchor {
         if case .x(let x) = self, case .x(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
+
         if case .y(let x) = self, case .y(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
+
         if case .dimension(let x) = self, case .dimension(let y) = anchor {
             return x.constraint(lessThanOrEqualTo: y, constant: c)
         }
+
         fatalError("This should not happen")
     }
-
 
 }
 
@@ -334,10 +358,12 @@ private extension UIView {
 
         default:
             fatalError("There is an unhandled edge case with edges. Get it? Edge case… 😂")
-            
+
         }
     }
 
+    @discardableResult
+    @available(*, unavailable, message: "Only to be used from Objective-C")
     func _objcPinToView(view: UIView, inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
         let viewConstraints: [NSLayoutConstraint] = [
             self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset.left),
@@ -345,14 +371,14 @@ private extension UIView {
             self.topAnchor.constraint(equalTo: view.topAnchor, constant: inset.top),
             self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: inset.bottom),
             ]
-
+        
         return viewConstraints
     }
-
+    
 }
 
 private extension Array where Element: NSLayoutConstraint {
-
+    
     func setActive(active: Bool) {
         if active {
             NSLayoutConstraint.activate(self)
@@ -360,5 +386,5 @@ private extension Array where Element: NSLayoutConstraint {
             NSLayoutConstraint.deactivate(self)
         }
     }
-
+    
 }
