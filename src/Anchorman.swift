@@ -84,6 +84,7 @@ public struct EdgeAnchor: OptionSet, Anchor {
 }
 
 public struct SizeAnchor: OptionSet, Anchor {
+
     public let rawValue: Int
     public let constant: CGFloat
     public let priority: UILayoutPriority
@@ -112,8 +113,8 @@ public struct SizeAnchor: OptionSet, Anchor {
 public extension UIView {
 
     static func setTranslateAutoresizingMasks(views: [UIView], on: Bool) {
-        for view in views {
-            view.translatesAutoresizingMaskIntoConstraints = on
+        views.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = on
         }
     }
 
@@ -132,6 +133,9 @@ public extension UIView {
 
     @discardableResult
     func pinToView(_ view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+
         let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
@@ -146,8 +150,8 @@ public extension UIView {
                     priority = UILayoutPriorityRequired
                 }
 
-                let currentAnchor = edge.typedAnchorForView(view: self)
-                let viewAnchor = edge.typedAnchorForView(view: view)
+                let currentAnchor = edge.layoutAnchorForView(view: self)
+                let viewAnchor = edge.layoutAnchorForView(view: view)
 
                 let constraint: NSLayoutConstraint
                 if relation == .greaterThanOrEqual {
@@ -175,8 +179,6 @@ public extension UIView {
         let widthConstraint = addConstraint(.width)
         let heightConstraint = addConstraint(.height)
 
-        self.translatesAutoresizingMaskIntoConstraints = false
-
         let viewConstraints = [ leadingConstraint, trailingConstraint, topConstraint, bottomConstraint, centerXConstraint, centerYConstraint, widthConstraint, heightConstraint ].flatMap { $0 }
         viewConstraints.setActive(active: activate)
 
@@ -185,9 +187,11 @@ public extension UIView {
 
     @discardableResult
     func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
 
-        let fromAnchor = edge.typedAnchorForView(view: self)
-        let toAnchor = edge.typedAnchorForView(view: view)
+        let fromAnchor = edge.layoutAnchorForView(view: self)
+        let toAnchor = edge.layoutAnchorForView(view: view)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
@@ -278,13 +282,14 @@ public extension UIView {
         if let superview = self.superview {
             return self._objcPinToView(view: superview, inset: inset)
         } else {
-            fatalError("Cannot pin to a nil superview")
+            fatalError("Cannot pin to a nil superview. You should fix that. 🛠")
         }
     }
 
 }
 
 private enum TypedAnchor {
+
     case x(NSLayoutXAxisAnchor)
     case y(NSLayoutYAxisAnchor)
     case dimension(NSLayoutDimension)
@@ -302,7 +307,7 @@ private enum TypedAnchor {
             return fromConstraint.constraint(equalTo: toConstraint, constant: constant)
 
         default:
-            fatalError("How do dare you try and constrain me, illegally!")
+            fatalError("I feel so constrainted, not cool! 🤐")
 
         }
     }
@@ -320,7 +325,7 @@ private enum TypedAnchor {
             return fromConstraint.constraint(greaterThanOrEqualTo: toConstraint, constant: constant)
 
         default:
-            fatalError("How do dare you try and constrain me, illegally!")
+            fatalError("I feel so constrainted, not cool! 🤐")
 
         }
     }
@@ -338,7 +343,7 @@ private enum TypedAnchor {
             return fromConstraint.constraint(lessThanOrEqualTo: toConstraint, constant: constant)
 
         default:
-            fatalError("How do dare you try and constrain me, illegally!")
+            fatalError("I feel so constrainted, not cool! 🤐")
 
         }
     }
@@ -347,7 +352,7 @@ private enum TypedAnchor {
 
 private extension EdgeAnchor {
 
-    func typedAnchorForView(view: UIView) -> TypedAnchor {
+    func layoutAnchorForView(view: UIView) -> TypedAnchor {
         switch self {
 
         case EdgeAnchor.leading:
@@ -394,7 +399,7 @@ private extension SizeAnchor {
             return view.heightAnchor
 
         default:
-            fatalError("There is an unhandled size. Have you considered checking in another dimension? 📐")
+            fatalError("There is an unhandled size. Have you considered inventing another dimension? 📐")
 
         }
     }
@@ -411,14 +416,14 @@ private extension UIView {
             self.topAnchor.constraint(equalTo: view.topAnchor, constant: inset.top),
             self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: inset.bottom),
         ]
-        
+
         return viewConstraints
     }
 
 }
 
 private extension Array where Element: NSLayoutConstraint {
-    
+
     func setActive(active: Bool) {
         if active {
             NSLayoutConstraint.activate(self)
@@ -426,5 +431,5 @@ private extension Array where Element: NSLayoutConstraint {
             NSLayoutConstraint.deactivate(self)
         }
     }
-    
+
 }
