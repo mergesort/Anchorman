@@ -264,6 +264,24 @@ public extension NSLayoutConstraint {
 
 }
 
+// MARK: Objective-C API
+
+public extension UIView {
+
+    @available(*, unavailable, message: "Only to be used from Objective-C") func objc_pinToView(view: UIView, inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
+        return self._objcPinToView(view: view)
+    }
+
+    @available(*, unavailable, message: "Only to be used from Objective-C") func objc_pinToSuperview(inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
+        if let superview = self.superview {
+            return self._objcPinToView(view: superview, inset: inset)
+        } else {
+            fatalError("Cannot pin to a nil superview")
+        }
+    }
+
+}
+
 private enum TypedAnchor {
     case x(NSLayoutXAxisAnchor)
     case y(NSLayoutYAxisAnchor)
@@ -369,8 +387,8 @@ private extension UIView {
         }
     }
 
+
     @discardableResult
-    @available(*, unavailable, message: "Only to be used from Objective-C")
     func _objcPinToView(view: UIView, inset: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
         let viewConstraints: [NSLayoutConstraint] = [
             self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset.left),
