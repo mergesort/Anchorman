@@ -134,7 +134,6 @@ public extension UIView {
     @discardableResult
     func pinToView(_ view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
 
         let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
@@ -188,7 +187,6 @@ public extension UIView {
     @discardableResult
     func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
 
         let fromAnchor = edge.layoutAnchorForView(view: self)
         let toAnchor = edge.layoutAnchorForView(view: view)
