@@ -135,7 +135,7 @@ public extension UIView {
     func pinToView(_ view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
+        let addConstraint: (EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
                 let priority: UILayoutPriority
