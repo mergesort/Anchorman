@@ -189,7 +189,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let fromAnchor = edge.layoutAnchorForView(view: self)
-        let toAnchor = edge.layoutAnchorForView(view: view)
+        let toAnchor = toEdge.layoutAnchorForView(view: view)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
