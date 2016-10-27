@@ -125,7 +125,7 @@ public extension UIView {
     @discardableResult
     func pinToSuperview(_ edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
-            return self.pinToView(superview, edges: edges, activate: activate)
+            return self.pinToView(superview, edges: edges, relation: relation, activate: activate)
         } else {
             fatalError("Cannot pin to a nil superview")
         }
