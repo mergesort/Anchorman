@@ -4,7 +4,7 @@
 
 ![That doesn't make any sense](gifs/doesnt_make_sense.gif)
 
-Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Try writing `.translatesAutoresizingMaskIntoConstraints = true` and `.active = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
+Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Try writing `.translatesAutoresizingMaskIntoConstraints = true` and `.isActive = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
 
 ![I don't know what we're yelling about!](gifs/yelling.gif)
 
@@ -19,7 +19,7 @@ myView.pinToSuperview()
 That was easy, but I don't want to pin to a superview anymore, I want to pin to a button.
 
 ```swift
-myView.pinToView(someCoolerButton)
+myView.pin(toView: someCoolerButton)
 ```
 
 Ah, ok. Easy enough… How about pinning my label to the left and right side of it's superview… and with insets… and center it in my view.
@@ -35,14 +35,14 @@ Whoa, that was neat! You can specify a group of edges you want to pin to, and th
 And of course, you can pick one edge to pin to another edge.
 
 ```swift
-myImportantLabel.pinEdge(.top, toEdge: .bottom, ofView: myGreatSearchBar, constant: 10.0)
+myImportantLabel.pin(edge: .top, toEdge: .bottom, ofView: myGreatSearchBar, constant: 10.0)
 ```
 
 Last but not least, set constant values for your 
 constraints. For width, height, or both.
 
 ```swift
-myView.setSize([ .width(44.0), .height(44.0) ])
+myView.set(size: [ .width(44.0), .height(44.0) ])
 ```
 
 ## Installation
