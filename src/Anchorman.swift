@@ -125,7 +125,7 @@ public extension UIView {
     func pin(toView view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        let addConstraint: (_ edge: EdgeAnchor) -> NSLayoutConstraint? = { edge in
+        let addConstraint: (EdgeAnchor) -> NSLayoutConstraint? = { edge in
             if edges.contains(edge) {
                 let constant: CGFloat
                 let priority: UILayoutPriority
@@ -179,7 +179,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let fromAnchor = edge.layoutAnchorForView(view: self)
-        let toAnchor = edge.layoutAnchorForView(view: view)
+        let toAnchor = toEdge.layoutAnchorForView(view: view)
 
         let constraint: NSLayoutConstraint
         if relation == .greaterThanOrEqual {
