@@ -112,27 +112,17 @@ public struct SizeAnchor: OptionSet, Anchor {
 
 public extension UIView {
 
-    static func setTranslateAutoresizingMasks(views: [UIView], on: Bool) {
-        views.forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = on
-        }
-    }
-
-}
-
-public extension UIView {
-
     @discardableResult
     func pinToSuperview(_ edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         if let superview = self.superview {
-            return self.pinToView(superview, edges: edges, relation: relation, activate: activate)
+            return self.pin(toView: superview, edges: edges, activate: activate)
         } else {
             fatalError("Cannot pin to a nil superview")
         }
     }
 
     @discardableResult
-    func pinToView(_ view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+    func pin(toView view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let addConstraint: (EdgeAnchor) -> NSLayoutConstraint? = { edge in
@@ -185,7 +175,7 @@ public extension UIView {
     }
 
     @discardableResult
-    func pinEdge(_ edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let fromAnchor = edge.layoutAnchorForView(view: self)
@@ -207,7 +197,7 @@ public extension UIView {
     }
 
     @discardableResult
-    func setSize(_ sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
+    func set(size sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let currentDimension = sizeAnchor.layoutDimensionForView(view: self)
@@ -228,12 +218,12 @@ public extension UIView {
     }
 
     @discardableResult
-    func setSize(_ sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
-        return sizeAnchors.map { return self.setSize($0, relation: relation, activate: activate) }
+    func set(size sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, activate: Bool = true) -> [NSLayoutConstraint] {
+        return sizeAnchors.map { return self.set(size: $0, relation: relation, activate: activate) }
     }
 
     @discardableResult
-    func setRelativeSize(_ sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, activate: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         let fromDimension = sizeAnchor.layoutDimensionForView(view: self)
@@ -266,6 +256,16 @@ public extension NSLayoutConstraint {
         NSLayoutConstraint.deactivate(constraints.flatMap { $0 })
     }
 
+}
+
+public extension Array where Element: UIView {
+
+    func translateAutoresizingMasks(on: Bool) {
+        self.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = on
+        }
+    }
+    
 }
 
 // MARK: Objective-C API
