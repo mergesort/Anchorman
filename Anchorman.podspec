@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   spec.version      = '2.0'
   spec.license      = { :type => 'MIT' }
   spec.author      =  { 'Joe Fabisevich' => 'github@fabisevi.ch' }
-  spec.source_files = 'src/*.{swift}'
+  spec.source_files = 'Anchorman/*.{swift}'
   spec.source       =  { :git => 'https://github.com/mergesort/Anchorman.git', :tag => "#{spec.version}" }
   spec.homepage     = 'https://github.com/mergesort/Anchorman'
 
