@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		040F63D31EA2659B0038C381 /* Anchorman.h in Headers */ = {isa = PBXBuildFile; fileRef = 040F63D11EA2659B0038C381 /* Anchorman.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		040F63DD1EA268180038C381 /* Anchorman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F63DC1EA268180038C381 /* Anchorman.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		040F63CE1EA2659B0038C381 /* Anchorman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		040F63D11EA2659B0038C381 /* Anchorman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Anchorman.h; sourceTree = "<group>"; };
 		040F63D21EA2659B0038C381 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		040F63DC1EA268180038C381 /* Anchorman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorman.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 		040F63D01EA2659B0038C381 /* Anchorman */ = {
 			isa = PBXGroup;
 			children = (
+				040F63DC1EA268180038C381 /* Anchorman.swift */,
 				040F63D11EA2659B0038C381 /* Anchorman.h */,
 				040F63D21EA2659B0038C381 /* Info.plist */,
 			);
@@ -95,6 +98,7 @@
 				TargetAttributes = {
 					040F63CD1EA2659B0038C381 = {
 						CreatedOnToolsVersion = 8.3.1;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -131,6 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040F63DD1EA268180038C381 /* Anchorman.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +246,7 @@
 		040F63D71EA2659B0038C381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -253,6 +259,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mergesort.Anchorman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -260,6 +267,7 @@
 		040F63D81EA2659B0038C381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
