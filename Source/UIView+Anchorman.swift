@@ -43,7 +43,7 @@ public extension UIView {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UIView`'s `EdgeAnchor` and another `UIView`'s `EdgeAnchor`.
     @discardableResult
-    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         return self.pin(edge: edge, toEdge: toEdge, ofAnchorable: view, relation: relation, constant: constant, priority: priority, isActive: isActive)
@@ -61,7 +61,7 @@ public extension UIView {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UIView`'s `EdgeAnchor` and another `UILayoutGuide`'s `EdgeAnchor`.
     @discardableResult
-    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofLayoutGuide layoutGuide: UILayoutGuide, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of layoutGuide: UILayoutGuide, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
         return self.pin(edge: edge, toEdge: toEdge, ofAnchorable: layoutGuide, relation: relation, constant: constant, priority: priority, isActive: isActive)
     }
 
@@ -93,7 +93,7 @@ public extension UIView {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UIView`'s `SizeAnchor` and another `UILayoutGuide`'s `SizeAnchor`.
     @discardableResult
-    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         return self.set(relativeSize: sizeAnchor, toSizeAnchor: toSizeAnchor, ofAnchorable: view, multiplier: multiplier, constant: constant, relation: relation, isActive: isActive)
@@ -111,7 +111,7 @@ public extension UIView {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UIView`'s `SizeAnchor` and another `UILayoutGuide`'s `SizeAnchor`.
     @discardableResult
-    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofLayoutGuide layoutGuide: UILayoutGuide, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of layoutGuide: UILayoutGuide, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         return self.set(relativeSize: sizeAnchor, toSizeAnchor: toSizeAnchor, ofAnchorable: layoutGuide, multiplier: multiplier, constant: constant, relation: relation, isActive: isActive)
