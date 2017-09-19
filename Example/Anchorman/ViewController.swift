@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         return label
     }()
     
-    let greenLabel: UILabel = {
+    let blueLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = #colorLiteral(red: 0, green: 0.336333222, blue: 0.7391359786, alpha: 1)
         label.text = "I'm blue if I was green I would die"
@@ -78,7 +78,7 @@ private extension ViewController {
         self.backgroundView.addSubview(self.messageLabel)
         self.backgroundView.addSubview(self.footerLabel)
         self.backgroundView.addSubview(self.pinkLabel)
-        self.backgroundView.addSubview(self.greenLabel)
+        self.backgroundView.addSubview(self.blueLabel)
         
         // This is us calling the meat.
         self.setupConstraints()
@@ -103,7 +103,7 @@ private extension ViewController {
 
         // You can set `SizeAnchor` to be relative to another `SizeAnchor`. In this case the `footerLabel`
         // will be as wide as the `statusBarBackgroundView` with an inset of 20 pixels.
-        self.footerLabel.set(relativeSize: .width, toSizeAnchor: .width, ofView: self.statusBarBackgroundView, multiplier: 1.0, constant: -20.0)
+        self.footerLabel.set(relativeSize: .width, toSizeAnchor: .width, of: self.statusBarBackgroundView, multiplier: 1.0, constant: -20.0)
 
         self.footerLabel.set(size: .height(44.0))
 
@@ -115,9 +115,9 @@ private extension ViewController {
         // You can also choose to activate the constraint by default or not. This defaults to `true`.
         self.pinkLabel.set(size: [.width(200.0), .height(80.0)], relation: .lessThanOrEqual, isActive: true)
 
-        self.greenLabel.set(relativeSize: .width, toSizeAnchor: .width, ofView: self.pinkLabel, multiplier: 1.0, constant: 0.0)
-        self.greenLabel.pin(edge: .top, toEdge: .bottom, ofView: self.pinkLabel)
-        self.greenLabel.pin(to: self.pinkLabel, edges: [ .leading, .trailing ])
+        self.blueLabel.set(relativeSize: .width, toSizeAnchor: .width, of: self.pinkLabel, multiplier: 1.0, constant: 0.0)
+        self.blueLabel.pin(edge: .top, toEdge: .bottom, of: self.pinkLabel)
+        self.blueLabel.pin(to: self.pinkLabel, edges: [ .leading, .trailing ])
     }
     
 }
