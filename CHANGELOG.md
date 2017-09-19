@@ -31,30 +31,31 @@
 
 `func pinToSuperview(_ edges: [EdgeAnchor], relation: NSLayoutRelation, isActive: Bool) -> [NSLayoutConstraint]`
 
---
+---
+
 ~~`func pin(toView view: UIView, edges: [EdgeAnchor], relation: NSLayoutRelation, activate: Bool) -> [NSLayoutConstraint]`~~
 
 `func pin(to view: UIView, edges: [EdgeAnchor], relation: NSLayoutRelation, isActive: Bool) -> [NSLayoutConstraint]`
 
---
+---
 
 ~~`func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofView view: UIView, relation: NSLayoutRelation, constant: CGFloat, priority: UILayoutPriority, activate: Bool) -> NSLayoutConstraint`~~
 
 `func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat, priority: UILayoutPriority, isActive: Bool) -> NSLayoutConstraint`
 
---
+---
 
 ~~`func set(size sizeAnchor: SizeAnchor, relation: NSLayoutRelation, activate: Bool) -> NSLayoutConstraint`~~
 
 `func set(size sizeAnchor: SizeAnchor, relation: NSLayoutRelation, isActive: Bool) -> NSLayoutConstraint`
 
---
+---
 
 ~~`func set(size sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation, activate: Bool) -> [NSLayoutConstraint]`~~
 
 `func set(size sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation, isActive: Bool) -> [NSLayoutConstraint]`
 
---
+---
 
 ~~`func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofView view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation, activate: Bool) -> NSLayoutConstraint`~~
 
