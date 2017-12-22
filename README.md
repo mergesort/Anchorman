@@ -10,7 +10,7 @@
 
 ![That doesn't make any sense](gifs/doesnt_make_sense.gif)
 
-Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Try writing `.translatesAutoresizingMaskIntoConstraints = true` and `.isActive = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
+Nah. `NSLayoutAnchor` is pretty neat! But it's still a bit tedious of an API. Try writing `.translatesAutoresizingMaskIntoConstraints = false` and `.isActive = true` 10 times over. But we can make it a bit easier with a *very* thin layer of abstraction.
 
 ![I don't know what we're yelling about!](gifs/yelling.gif)
 
