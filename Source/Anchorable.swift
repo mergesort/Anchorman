@@ -116,7 +116,7 @@ extension Anchorable {
         let widthConstraint = addConstraint(edge: .width)
         let heightConstraint = addConstraint(edge: .height)
         
-        let viewConstraints = [ leadingConstraint, trailingConstraint, topConstraint, bottomConstraint, centerXConstraint, centerYConstraint, widthConstraint, heightConstraint ].flatMap { $0 }
+        let viewConstraints = [ leadingConstraint, trailingConstraint, topConstraint, bottomConstraint, centerXConstraint, centerYConstraint, widthConstraint, heightConstraint ].compactMap { $0 }
         viewConstraints.forEach { $0.isActive = isActive }
         
         return viewConstraints
