@@ -29,7 +29,7 @@ public extension Anchorable {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `Anchorable` and another `Anchorable`.
     @discardableResult
-    func set(size sizeAnchor: SizeAnchor, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
+    func set(size sizeAnchor: SizeAnchor, relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
         let currentDimension = sizeAnchor.layoutDimensionForAnchorable(anchorable: self)
         
         let constraint: NSLayoutConstraint
@@ -55,7 +55,7 @@ public extension Anchorable {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `[NSLayoutConstraint]` between the current `Anchorable` and another `Anchorable`.
     @discardableResult
-    func set(size sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutRelation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
+    func set(size sizeAnchors: [SizeAnchor] = [ SizeAnchor.width, SizeAnchor.height ], relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
         return sizeAnchors.map { return self.set(size: $0, relation: relation, isActive: isActive) }
     }
 
@@ -72,7 +72,7 @@ extension Anchorable {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `[NSLayoutConstraint]` between the current `Anchorable` and another `Anchorable`.
     @discardableResult
-    func pin(toAnchorable anchorable: Anchorable, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
+    func pin(toAnchorable anchorable: Anchorable, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
 
         func addConstraint(edge: EdgeAnchor) -> NSLayoutConstraint? {
             guard edges.contains(edge) else {
@@ -135,7 +135,7 @@ extension Anchorable {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `Anchorable` and another `Anchorable`.
     @discardableResult
-    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofAnchorable anchorable: Anchorable, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, ofAnchorable anchorable: Anchorable, relation: NSLayoutConstraint.Relation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
         
         let fromAnchor = edge.layoutAnchorForAnchorable(anchorable: self)
         let toAnchor = toEdge.layoutAnchorForAnchorable(anchorable: anchorable)
@@ -167,7 +167,7 @@ extension Anchorable {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `Anchorable` and another `Anchorable`.
     @discardableResult
-    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofAnchorable anchorable: Anchorable, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, ofAnchorable anchorable: Anchorable, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> NSLayoutConstraint {
         let fromDimension = sizeAnchor.layoutDimensionForAnchorable(anchorable: self)
         let toDimension = toSizeAnchor.layoutDimensionForAnchorable(anchorable: anchorable)
         
