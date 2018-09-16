@@ -11,7 +11,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `[NSLayoutConstraint]` between the current `UILayoutGuide` and another `UILayoutGuide`.
     @discardableResult
-    func pin(to layoutGuide: UILayoutGuide, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
+    func pin(to layoutGuide: UILayoutGuide, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
         return self.pin(toAnchorable: layoutGuide, edges: edges, relation: relation, isActive: isActive)
     }
     
@@ -24,7 +24,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `[NSLayoutConstraint]` between the current `UILayoutGuide` and another `UIView`.
     @discardableResult
-    func pin(to view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutRelation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
+    func pin(to view: UIView, edges: [EdgeAnchor] = EdgeAnchor.allSides, relation: NSLayoutConstraint.Relation = .equal, isActive: Bool = true) -> [NSLayoutConstraint] {
         return self.pin(toAnchorable: view, edges: edges, relation: relation, isActive: isActive)
     }
 
@@ -40,7 +40,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UILayoutGuide` and another `UILayoutGuide`.
     @discardableResult
-    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of layoutGuide: UILayoutGuide, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of layoutGuide: UILayoutGuide, relation: NSLayoutConstraint.Relation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
         return self.pin(edge: edge, toEdge: toEdge, ofAnchorable: layoutGuide, relation: relation, constant: constant, priority: priority, isActive: isActive)
     }
 
@@ -56,7 +56,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UILayoutGuide` and another `UIView`.
     @discardableResult
-    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of view: UIView, relation: NSLayoutRelation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
+    func pin(edge: EdgeAnchor, toEdge: EdgeAnchor, of view: UIView, relation: NSLayoutConstraint.Relation = .equal, constant: CGFloat = 0.0, priority: UILayoutPriority = .required, isActive: Bool = true) -> NSLayoutConstraint {
         return self.pin(edge: edge, toEdge: toEdge, ofAnchorable: view, relation: relation, constant: constant, priority: priority, isActive: isActive)
     }
 
@@ -72,7 +72,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UILayoutGuide` and another `UIView`.
     @discardableResult
-    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of layoutGuide: UILayoutGuide, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation, isActive: Bool) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of layoutGuide: UILayoutGuide, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutConstraint.Relation, isActive: Bool) -> NSLayoutConstraint {
         return self.set(relativeSize: sizeAnchor, toSizeAnchor: toSizeAnchor, ofAnchorable: layoutGuide, multiplier: multiplier, constant: constant, relation: relation, isActive: isActive)
     }
 
@@ -88,7 +88,7 @@ public extension UILayoutGuide {
     ///   - isActive: Whether or not the underlying `NSLayoutConstraint` will be active.
     /// - Returns: An `NSLayoutConstraint` between the current `UILayoutGuide` and another `UIView`.
     @discardableResult
-    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutRelation, isActive: Bool) -> NSLayoutConstraint {
+    func set(relativeSize sizeAnchor: SizeAnchor, toSizeAnchor: SizeAnchor, of view: UIView, multiplier: CGFloat, constant: CGFloat, relation: NSLayoutConstraint.Relation, isActive: Bool) -> NSLayoutConstraint {
         return self.set(relativeSize: sizeAnchor, toSizeAnchor: toSizeAnchor, ofAnchorable: view, multiplier: multiplier, constant: constant, relation: relation, isActive: isActive)
     }
 }
