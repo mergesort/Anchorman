@@ -1,0 +1,15 @@
+stages:
+  - name: lint
+    if: branch = master OR branch =~ ^\d+\.\d+\.\d+$
+  - name: compile
+    if: branch = master OR branch =~ ^\d+\.\d+\.\d+$
+  - name: test
+    if: branch = master OR branch =~ ^\d+\.\d+\.\d+$
+  - name: deploy
+    if: branch =~ ^\d+\.\d+\.\d+$
+
+- stage: deploy
+  script: pod trunk push --verbose | ruby -e 'ARGF.each{ print "." }'
+  os: osx
+  osx_image: xcode10.1
+  language: swift
