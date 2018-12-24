@@ -1,5 +1,9 @@
 # Change Log
 
+# 3.1 (2018-12-24)
+
+- Adding support for Swift 4.2.
+
 # 3.0 (2017-09-11)
 
 - The underlying framework is completely rewritten. If you find any bugs, please report them. 🐛
