@@ -9,6 +9,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/mergesort/Anchorman'
 
   spec.ios.deployment_target = '9.0'
+  spec.swift_version = '4.2'
   spec.requires_arc = true
   spec.social_media_url = 'https://twitter.com/mergesort'
   spec.framework    = 'UIKit'
