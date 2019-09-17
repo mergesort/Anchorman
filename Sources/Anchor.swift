@@ -18,7 +18,7 @@ public protocol Anchor {
 
 public extension Anchor {
 
-    public init(rawValue: Int) {
+    init(rawValue: Int) {
         self.init(rawValue: rawValue, constant: 0.0, priority: .required)
     }
 }
