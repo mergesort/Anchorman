@@ -1,6 +1,6 @@
 # Change Log
 
-# 3.2 (2020-01-19)
+# 3.2.0 (2020-01-19)
 
 - Adding support for Swift 5.1.
 - Cleaning up redundant public access level warnings.
