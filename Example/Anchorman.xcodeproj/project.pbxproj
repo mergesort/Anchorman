@@ -12,11 +12,11 @@
 		B765B7CE1F58C61C003601BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B765B7CC1F58C61C003601BE /* Main.storyboard */; };
 		B765B7D01F58C61C003601BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B765B7CF1F58C61C003601BE /* Assets.xcassets */; };
 		B765B7D31F58C61C003601BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B765B7D11F58C61C003601BE /* LaunchScreen.storyboard */; };
-		B765B7ED1F58C96C003601BE /* UIView+Anchorman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B765B7EA1F58C961003601BE /* UIView+Anchorman.swift */; };
-		B77159311F6A019100B7FE29 /* Anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77159301F6A019100B7FE29 /* Anchor.swift */; };
-		B77159331F70403A00B7FE29 /* UILayoutGuide+Anchorman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77159321F70403A00B7FE29 /* UILayoutGuide+Anchorman.swift */; };
-		B77159351F70474A00B7FE29 /* UIView+BackwardsCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77159341F70474A00B7FE29 /* UIView+BackwardsCompatibility.swift */; };
-		B77159371F707AB000B7FE29 /* Anchorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77159361F707AB000B7FE29 /* Anchorable.swift */; };
+		B7BC3CBE23D4F31D008BFF18 /* UILayoutGuide+Anchorman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC3CB723D4F31D008BFF18 /* UILayoutGuide+Anchorman.swift */; };
+		B7BC3CBF23D4F31D008BFF18 /* Anchorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC3CB823D4F31D008BFF18 /* Anchorable.swift */; };
+		B7BC3CC023D4F31D008BFF18 /* Anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC3CB923D4F31D008BFF18 /* Anchor.swift */; };
+		B7BC3CC123D4F31D008BFF18 /* UIView+BackwardsCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC3CBB23D4F31D008BFF18 /* UIView+BackwardsCompatibility.swift */; };
+		B7BC3CC223D4F31D008BFF18 /* UIView+Anchorman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC3CBC23D4F31D008BFF18 /* UIView+Anchorman.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,11 +27,12 @@
 		B765B7CF1F58C61C003601BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B765B7D21F58C61C003601BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B765B7D41F58C61C003601BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B765B7EA1F58C961003601BE /* UIView+Anchorman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Anchorman.swift"; sourceTree = "<group>"; };
-		B77159301F6A019100B7FE29 /* Anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchor.swift; sourceTree = "<group>"; };
-		B77159321F70403A00B7FE29 /* UILayoutGuide+Anchorman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutGuide+Anchorman.swift"; sourceTree = "<group>"; };
-		B77159341F70474A00B7FE29 /* UIView+BackwardsCompatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+BackwardsCompatibility.swift"; sourceTree = "<group>"; };
-		B77159361F707AB000B7FE29 /* Anchorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchorable.swift; sourceTree = "<group>"; };
+		B7BC3CB723D4F31D008BFF18 /* UILayoutGuide+Anchorman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILayoutGuide+Anchorman.swift"; sourceTree = "<group>"; };
+		B7BC3CB823D4F31D008BFF18 /* Anchorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorable.swift; sourceTree = "<group>"; };
+		B7BC3CB923D4F31D008BFF18 /* Anchor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchor.swift; sourceTree = "<group>"; };
+		B7BC3CBA23D4F31D008BFF18 /* Anchorman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anchorman.h; sourceTree = "<group>"; };
+		B7BC3CBB23D4F31D008BFF18 /* UIView+BackwardsCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+BackwardsCompatibility.swift"; sourceTree = "<group>"; };
+		B7BC3CBC23D4F31D008BFF18 /* UIView+Anchorman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchorman.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +65,7 @@
 		B765B7C71F58C61C003601BE /* Anchorman */ = {
 			isa = PBXGroup;
 			children = (
-				B765B7E81F58C961003601BE /* Source */,
+				B7BC3CB523D4F31D008BFF18 /* Sources */,
 				B765B7C81F58C61C003601BE /* AppDelegate.swift */,
 				B765B7CA1F58C61C003601BE /* ViewController.swift */,
 				B765B7CC1F58C61C003601BE /* Main.storyboard */,
@@ -75,17 +76,26 @@
 			path = Anchorman;
 			sourceTree = "<group>";
 		};
-		B765B7E81F58C961003601BE /* Source */ = {
+		B7BC3CB523D4F31D008BFF18 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B765B7EA1F58C961003601BE /* UIView+Anchorman.swift */,
-				B77159341F70474A00B7FE29 /* UIView+BackwardsCompatibility.swift */,
-				B77159301F6A019100B7FE29 /* Anchor.swift */,
-				B77159361F707AB000B7FE29 /* Anchorable.swift */,
-				B77159321F70403A00B7FE29 /* UILayoutGuide+Anchorman.swift */,
+				B7BC3CB623D4F31D008BFF18 /* Anchorman */,
 			);
-			name = Source;
-			path = ../../Source;
+			name = Sources;
+			path = ../../Sources;
+			sourceTree = "<group>";
+		};
+		B7BC3CB623D4F31D008BFF18 /* Anchorman */ = {
+			isa = PBXGroup;
+			children = (
+				B7BC3CB723D4F31D008BFF18 /* UILayoutGuide+Anchorman.swift */,
+				B7BC3CB823D4F31D008BFF18 /* Anchorable.swift */,
+				B7BC3CB923D4F31D008BFF18 /* Anchor.swift */,
+				B7BC3CBA23D4F31D008BFF18 /* Anchorman.h */,
+				B7BC3CBB23D4F31D008BFF18 /* UIView+BackwardsCompatibility.swift */,
+				B7BC3CBC23D4F31D008BFF18 /* UIView+Anchorman.swift */,
+			);
+			path = Anchorman;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,7 +130,7 @@
 				TargetAttributes = {
 					B765B7C41F58C61C003601BE = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -161,13 +171,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B77159371F707AB000B7FE29 /* Anchorable.swift in Sources */,
-				B77159351F70474A00B7FE29 /* UIView+BackwardsCompatibility.swift in Sources */,
-				B77159331F70403A00B7FE29 /* UILayoutGuide+Anchorman.swift in Sources */,
 				B765B7CB1F58C61C003601BE /* ViewController.swift in Sources */,
+				B7BC3CC223D4F31D008BFF18 /* UIView+Anchorman.swift in Sources */,
+				B7BC3CC023D4F31D008BFF18 /* Anchor.swift in Sources */,
+				B7BC3CC123D4F31D008BFF18 /* UIView+BackwardsCompatibility.swift in Sources */,
+				B7BC3CBE23D4F31D008BFF18 /* UILayoutGuide+Anchorman.swift in Sources */,
+				B7BC3CBF23D4F31D008BFF18 /* Anchorable.swift in Sources */,
 				B765B7C91F58C61C003601BE /* AppDelegate.swift in Sources */,
-				B77159311F6A019100B7FE29 /* Anchor.swift in Sources */,
-				B765B7ED1F58C96C003601BE /* UIView+Anchorman.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +323,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Anchorman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -327,7 +337,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Anchorman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -18,9 +18,10 @@ public protocol Anchor {
 
 public extension Anchor {
 
-    public init(rawValue: Int) {
+    init(rawValue: Int) {
         self.init(rawValue: rawValue, constant: 0.0, priority: .required)
     }
+
 }
 
 /// The representation of a constructed anchor matching values provided by `Anchorable`.
@@ -167,6 +168,7 @@ public struct EdgeAnchor: OptionSet, Anchor {
     public static func height(_ constant: CGFloat, priority: UILayoutPriority = .required) -> EdgeAnchor {
         return EdgeAnchor(rawValue: EdgeAnchor.height.rawValue, constant: constant, priority: priority)
     }
+
 }
 
 /// The representation of a constructed anchor matching values provided by `Anchorable`.
