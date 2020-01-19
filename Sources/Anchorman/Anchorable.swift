@@ -82,7 +82,7 @@ extension Anchorable {
             let constant: CGFloat
             let priority: UILayoutPriority
             
-            if let index = edges.index(of: edge) {
+            if let index = edges.firstIndex(of: edge) {
                 let currentEdge = edges[index]
                 constant = currentEdge.constant
                 priority = currentEdge.priority
